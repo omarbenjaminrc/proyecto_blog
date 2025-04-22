@@ -1,0 +1,26 @@
+
+{% extends "blog/base.html" %} 
+{% block content %}
+<h1>Mi Blog Personal</h1>
+<h<r>
+
+{% if articulos %}
+    {% for articulo in articulos %}
+    <article>
+        <h2>
+        <a href="{% url 'blog:detalle_articulo' slug=articulo.slug %}">
+            {{ articulo.titulo }}
+        </a>
+        </h2>
+        <p class="text-muted">
+        Publicado el {{ articulo.fecha_creacion|date:"d M Y" }}
+        </p>
+        <p>{{ articulo.contenido|truncatewords:50|linebreaksbr }}</p>
+        <hr>
+    </article>
+    {% endfor %}
+{% else %}
+    <p>Todavía no hay artículos publicados.</p>
+{% endif %}
+
+{% endblock content %}

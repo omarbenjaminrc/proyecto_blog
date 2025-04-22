@@ -26,4 +26,4 @@ class Articulo(models.Model):
         '''
         from django.urls import reverse
         
-        return reverse('detalle_articulo', kwargs={'slug': self.slug})
+        return reverse('blog:detalle_articulo', kwargs={'slug': self.slug})

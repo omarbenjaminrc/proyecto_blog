@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %} 
+
+{% block content %}
+<article>
+    <h1>{{ articulo.titulo }}</h1>
+    <p class="text-muted">
+    Publicado el {{ articulo.fecha_creacion|date:"d M Y" }}
+    {% if articulo.fecha_creacion != articulo.fecha_actualizacion %}
+    | Actualizado el {{ articulo.fecha_actualizacion|date:"d M Y" }}
+    {% endif %}
+    </p>
+    <hr>
+    <div>
+    {{ articulo.contenido|linebreaksbr }} 
+    </div>
+</article>
+<hr>
+<a href="{% url 'blog:lista_articulos' %}">Volver a la lista</a>
+{% endblock content %}
