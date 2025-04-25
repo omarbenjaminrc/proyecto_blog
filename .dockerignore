@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml # Si lo añades más tarde
+
+# Entorno virtual
+venv/
+.env
+
+# Base de datos local (¡Importante si usas volúmenes!)
+db.sqlite3
+*.sqlite3-journal
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Editores e IDEs
+.vscode/
+.idea/
+
+# Archivos estáticos/media locales (serán manejados por collectstatic/volúmenes)
+staticfiles/
+media/
+staticfiles_collected/ # La carpeta definida en STATIC_ROOT
+
+# Otros
+*.log
+*.pot
+*.py[cod]
+*~

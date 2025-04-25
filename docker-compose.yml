@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: .
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    ports:
+      - "8080:8000"
+    volumes:
+      - "//c/Users/holas/Dropbox/Mi PC (LAPTOP-DOMFHH14)/Desktop/proyectos/proyecto_blog/db.sqlite3:/app/db.sqlite3"
+      
