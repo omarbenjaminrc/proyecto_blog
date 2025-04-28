@@ -1,14 +1,23 @@
-
 services:
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    container_name: blog_desarrollo 
+
+    command: python manage.py runserver 0.0.0.0:8000
 
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1 
+      - DJANGO_SETTINGS_MODULE=config.settings_development # <-- ¡Usar settings_development!
+
     ports:
       - "8080:8000"
+
     volumes:
-      - "//c/Users/holas/Dropbox/Mi PC (LAPTOP-DOMFHH14)/Desktop/proyectos/proyecto_blog/db.sqlite3:/app/db.sqlite3"
-      
+      - .:/app
+      - "./db.sqlite3:/app/db.sqlite3"
+
+
