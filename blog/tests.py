@@ -82,3 +82,53 @@ class PruebasVistasBlog(TestCase):
         self.assertContains(respuesta, "Artículo Uno")
         self.assertContains(respuesta, "Contenido uno")
         self.assertNotContains(respuesta, "Contenido dos")
+    
+    def test_vista_lista_articulos_busqueda_sin_termino_actual(self):
+        """Verifica que sin término de búsqueda se muestran todos los artículos (los 2 existentes)."""
+        respuesta = self.client.get(self.url_lista)
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, self.articulo1.titulo)
+        self.assertContains(respuesta, self.articulo2.titulo)
+        self.assertEqual(len(respuesta.context['articulos']), 2)
+
+
+    def test_vista_lista_articulos_busqueda_con_termino_existente(self):
+        """Verifica que la búsqueda con un término que coincide con uno de los artículos filtra correctamente."""
+        respuesta = self.client.get(self.url_lista, {'q': 'Uno'})
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, self.articulo1.titulo)
+        self.assertNotContains(respuesta, self.articulo2.titulo)
+        self.assertEqual(len(respuesta.context['articulos']), 1)
+
+        respuesta = self.client.get(self.url_lista, {'q': 'Dos'})
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, self.articulo2.titulo)
+        self.assertNotContains(respuesta, self.articulo1.titulo)
+        self.assertEqual(len(respuesta.context['articulos']), 1)
+
+
+    def test_vista_lista_articulos_busqueda_con_termino_inexistente_actual(self):
+        """Verifica que la búsqueda con un término inexistente devuelve lista vacía."""
+        respuesta = self.client.get(self.url_lista, {'q': 'Inexistente'})
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertNotContains(respuesta, self.articulo1.titulo)
+        self.assertNotContains(respuesta, self.articulo2.titulo)
+        self.assertContains(respuesta, "Todavía no hay artículos publicados") # Ajusta si tu texto es diferente
+        self.assertEqual(len(respuesta.context['articulos']), 0)
+
+
+    def test_vista_lista_articulos_busqueda_con_termino_vacio_actual(self):
+        """Verifica que la búsqueda con un término vacío devuelve todos los artículos (los 2 existentes)."""
+        respuesta = self.client.get(self.url_lista, {'q': ''})
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, self.articulo1.titulo)
+        self.assertContains(respuesta, self.articulo2.titulo)
+        self.assertEqual(len(respuesta.context['articulos']), 2)
+
+    def test_vista_lista_articulos_muestra_termino_buscado_actual(self):
+        """Verifica que la plantilla muestra el término de búsqueda."""
+        termino_buscado = "Uno" 
+        respuesta = self.client.get(self.url_lista, {'q': termino_buscado})
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, f"Resultados de búsqueda para: <strong>{termino_buscado}</strong>") 
+        self.assertContains(respuesta, f'value="{termino_buscado}"')

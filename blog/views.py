@@ -12,6 +12,19 @@ class VistaListaArticulos(ListView):
     context_object_name = 'articulos'
     ordering = ['-fecha_creacion']
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+
+        if query:
+                queryset = queryset.filter(titulo__icontains = query)
+
+        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '') 
+        return context
+
 class VistaDetalleArticulo(DetailView):
     '''
     Vista para mostras detalles de articulos especificos
