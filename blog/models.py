@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 class Articulo(models.Model):
     titulo = models.CharField(max_length= 90)
