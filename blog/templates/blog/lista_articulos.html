@@ -11,7 +11,6 @@
     <h1 class="mb-4">Artículos Recientes</h1>
 {% endif %}
 
-
 {# --- Formulario de Búsqueda  --- #}
 <form method="get" class="mb-4"> 
     <div class="input-group"> 
@@ -24,26 +23,19 @@
 </form>
 {# --- Fin Formulario de Búsqueda --- #}
 
-
 <h5 class="mt-4 mb-2">Filtrar por Categoría:</h5>
 <div class="d-flex flex-wrap gap-2 mb-4"> 
- 
-    <a href="{% url 'blog:lista_articulos' %}{% if query %}?q={{ query }}{% endif %}"
-    class="btn {% if not categoria_actual %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm">Todas</a>
-
+    {# Botón "Todas" #}
+    <a href="{% url 'blog:lista_articulos' %}{% if query %}?q={{ query }}{% endif %}" class="btn {% if not categoria_actual %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm">Todas</a>
     {# Botones para cada categoría individual #}
     {% for categoria in categorias %}
-    <a href="{% url 'blog:lista_articulos' %}?categoria={{ categoria.slug }}{% if query %}&q={{ query }}{% endif %}"
-        class="btn {% if categoria_actual.slug == categoria.slug %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm">
-        {{ categoria.nombre }}
-    </a>
+    <a href="{% url 'blog:lista_articulos' %}?categoria={{ categoria.slug }}{% if query %}&q={{ query }}{% endif %}" class="btn {% if categoria_actual and categoria_actual.slug == categoria.slug %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm">{{ categoria.nombre }}</a>
     {% empty %}
     <span class="text-muted">No hay categorías disponibles.</span>
     {% endfor %}
 </div>
 <hr>
 {# --- Fin Lista de Categorías como Botones --- #}
-
 
 {# --- Sección de Artículos --- #}
 {% if articulos %}

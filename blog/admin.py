@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Articulo
+from .models import Articulo, Categoria
 
 class ArticuloAdmin(admin.ModelAdmin):
     model = Articulo
@@ -12,3 +12,4 @@ class ArticuloAdmin(admin.ModelAdmin):
     mostrar_categorias.short_description = 'Categorías'
 
 admin.site.register(Articulo, ArticuloAdmin)
+admin.site.register(Categoria)

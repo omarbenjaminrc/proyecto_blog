@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 
+
 class Articulo(models.Model):
     titulo = models.CharField(max_length= 90)
     contenido = models.TextField()
@@ -26,7 +27,6 @@ class Articulo(models.Model):
         '''
         Devuelve la URL absoluta para una instancia de Articulo.
         '''
-        from django.urls import reverse
         
         return reverse('blog:detalle_articulo', kwargs={'slug': self.slug})
     
